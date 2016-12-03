@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/fangj/report#readme",
   "dependencies": {
+    "bezier-easing-editor": "^0.6.0",
     "gitbook-plugin-fancybox": "^3.0.0",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "svg.js": "^2.3.6"
   },
   "devDependencies": {
     "@kadira/storybook": "^2.28.1"

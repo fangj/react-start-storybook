@@ -12,3 +12,15 @@ storiesOf('Button', module)
   .add('with pubsub', () => (
     <button onClick={()=>PubSub.publish('msg.error','something wrong')}>😀 😎 👍 💯</button>
   ));
+
+import SvgShape from '../components/svg';
+storiesOf('SVG', module)
+  .add('SvgShape', () => (
+    <SvgShape />
+  ))
+
+import BezierEditor from '../components/bezier';
+storiesOf('BezierEditor', module)
+  .add('BezierEditor', () => (
+    <BezierEditor />
+  ))

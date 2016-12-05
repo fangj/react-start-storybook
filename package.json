@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/fangj/report#readme",
   "dependencies": {
+    "draft-js": "^0.9.1",
     "gitbook-plugin-fancybox": "^3.0.0",
+    "immutable": "^3.8.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2"
   },

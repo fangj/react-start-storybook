@@ -12,3 +12,13 @@ storiesOf('Button', module)
   .add('with pubsub', () => (
     <button onClick={()=>PubSub.publish('msg.error','something wrong')}>😀 😎 👍 💯</button>
   ));
+
+import MyEditor from '../components/MyEditor'
+import RichEditor from '../components/rich/RichEditorExample.js'
+storiesOf('Draft', module)
+  .add('MyEditor', () => (
+  	<MyEditor />
+  ))
+  .add('RichEditor', () => (
+  	<RichEditor />
+  ))

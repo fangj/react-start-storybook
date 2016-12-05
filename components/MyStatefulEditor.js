@@ -6,8 +6,9 @@ export default class MyStatefulEditor extends Component {
     onChange: PropTypes.func
   };
 
-  state = {
-    value: RichTextEditor.createEmptyValue()
+  constructor(props) {
+    super(props);
+    this.state = {value: RichTextEditor.createEmptyValue()};
   }
 
   onChange = (value) => {

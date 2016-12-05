@@ -16,6 +16,7 @@ storiesOf('Button', module)
 import MyEditor from '../components/MyEditor'
 import RichEditor from '../components/rich/RichEditorExample.js'
 import MyStatefulEditor from '../components/MyStatefulEditor'
+import BVCE from '../components/BVCE'
 storiesOf('Draft', module)
   .add('MyEditor', () => (
   	<MyEditor />
@@ -25,4 +26,7 @@ storiesOf('Draft', module)
   ))
   .add('react-rte', () => (
   	<MyStatefulEditor />
+  ))
+  .add("BVCE", () => (
+  	<BVCE block={{type:"txt",data:"# aaa"}} save={(data)=>toastr.info(data)}/>
   ))

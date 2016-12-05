@@ -15,10 +15,14 @@ storiesOf('Button', module)
 
 import MyEditor from '../components/MyEditor'
 import RichEditor from '../components/rich/RichEditorExample.js'
+import MyStatefulEditor from '../components/MyStatefulEditor'
 storiesOf('Draft', module)
   .add('MyEditor', () => (
   	<MyEditor />
   ))
   .add('RichEditor', () => (
   	<RichEditor />
+  ))
+  .add('react-rte', () => (
+  	<MyStatefulEditor />
   ))

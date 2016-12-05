@@ -9,6 +9,7 @@ const {
   EditorState,
   RichUtils,
   DefaultDraftBlockRenderMap,
+  convertToRaw
 } = Draft;
 
 const {Map} = Immutable;
@@ -22,7 +23,14 @@ export default class RichEditorExample extends React.Component {
     };
 
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({editorState});
+    this.onChange = (editorState) => {
+      this.setState({editorState})
+      // this.logState();
+  };
+        this.logState = () => {
+            const content = this.state.editorState.getCurrentContent();
+            console.log(convertToRaw(content));
+          };
 
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
     this.toggleBlockType = (type) => this._toggleBlockType(type);

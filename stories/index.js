@@ -31,4 +31,19 @@ storiesOf('Hello', module)
   ))
   .add('Counter', () => (
     <CounterComponent/>
-  ))
+  ));
+
+import List from '../components/list/List.js'
+storiesOf('List', module)
+  .add('List', () => (
+    <List className="Jack" items={[1,2,3]} itemV={(d)=><pre>{d}</pre>}/>
+  ));
+
+const A=({show})=><div onClick={()=>show('b')}>A</div>
+const B=({show})=><div onClick={()=>show('a')}>B</div>
+
+import Switcher from '../components/list/Switcher.js'
+storiesOf('Switcher', module)
+  .add('Switcher', () => (
+    <Switcher defaultKey='a' views={{a:A,b:B}}/>
+  ));

@@ -36,7 +36,7 @@ storiesOf('Hello', module)
 import List from '../components/list/List.js'
 storiesOf('List', module)
   .add('List', () => (
-    <List className="Jack" items={[1,2,3]} itemV={(d)=><pre>{d}</pre>}/>
+    <List className="Jack" items={[1,2,3]} ns="somelist" ItemV={({item,idx})=><pre key={idx}>{item}</pre>}/>
   ));
 
 const A=({show})=><div onClick={()=>show('b')}>A</div>

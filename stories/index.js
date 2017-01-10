@@ -62,3 +62,9 @@ storiesOf('SwitcherE', module)
   .add('SwitcherE', () => (
     <SwitcherE defaultKey='a' views={{a:AE,b:BE}}/>
   ));
+
+import Menu from '../components/list/Menu.js'
+storiesOf('Menu', module)
+  .add('Menu', () => (
+    <Menu />
+  ));

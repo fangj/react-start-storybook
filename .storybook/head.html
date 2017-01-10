@@ -7,3 +7,6 @@
 <script>
 	PubSub.subscribe( 'msg.error', (msg,str)=>{toastr.error(str)} );
 </script>
+<script>
+	PubSub.subscribe( 'json', (msg,str)=>{toastr.info(JSON.stringify(str))} );
+</script>

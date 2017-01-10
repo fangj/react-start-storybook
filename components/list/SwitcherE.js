@@ -12,7 +12,7 @@ export default class Switcher extends React.Component {
   static propTypes = {
     views: React.PropTypes.object,//{key1:view1,key2:view2,...}
     defaultKey:React.PropTypes.string,//默认显示的组件
-    ns:React.PropTypes.string,//默认显示的组件
+    ns:React.PropTypes.string,//组件的命名空间
   };
   static defaultProps={
     views:{},

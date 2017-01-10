@@ -1,9 +1,15 @@
 import React from 'react';
 import List from './List';
 import CreateButton from './CreateButton';
+
 export default class Menu extends React.Component {
   static propTypes = {
-    name: React.PropTypes.string,
+    pid:React.PropTypes.string, //父列表的id
+    idx: React.PropTypes.number, //菜单块在父列表中的位置
+  };
+  static defaultProps = {
+    pid:"pid"
+    idx: 0,
   };
 
   constructor(props) {
@@ -11,16 +17,17 @@ export default class Menu extends React.Component {
   }
 
   render() {
+    const {idx,pid}=this.props;
     var items=[{
-      pid:"1",
+      pid,
+      idx,
       type:"text",
       name:"文字块",
-      idx:0
     },{
-      pid:"1",
+      pid,
+      idx,
       type:"image",
       name:"图片块",
-      idx:0
     }];
     return (
       <List className="Menu" items={items}  ns="menu" ItemV={CreateButton}/>

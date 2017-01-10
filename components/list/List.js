@@ -22,7 +22,7 @@ export default class List extends React.Component {
 
     return (
       <div className={className||""}>
-        {items.map((item,idx)=><ItemV key={idx} item={item} idx={idx} ns={ns+"."+idx} {...others}/>)}
+        {items.map((item,idx)=><ItemV key={idx} item={item} idx={idx} ns={ns+"/"+idx} {...others}/>)}
       </div>
     );
   }

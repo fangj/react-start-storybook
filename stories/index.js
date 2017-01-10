@@ -47,3 +47,18 @@ storiesOf('Switcher', module)
   .add('Switcher', () => (
     <Switcher defaultKey='a' views={{a:A,b:B}}/>
   ));
+
+
+const AE=({ns})=><div onClick={()=>
+  { 
+    console.log('ns',ns)
+      PubSub.publish(ns,{show:'b'})
+  }
+}>A</div>
+const BE=({ns})=><div onClick={()=>PubSub.publish(ns,{show:'a'})}>B</div>
+
+import SwitcherE from '../components/list/SwitcherE.js'
+storiesOf('SwitcherE', module)
+  .add('SwitcherE', () => (
+    <SwitcherE defaultKey='a' views={{a:AE,b:BE}}/>
+  ));

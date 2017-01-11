@@ -20,7 +20,9 @@
   "dependencies": {
     "gitbook-plugin-fancybox": "^3.0.0",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "react-player": "^0.14.1",
+    "react-videojs": "0.0.3"
   },
   "devDependencies": {
     "@kadira/storybook": "^2.28.1",

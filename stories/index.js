@@ -49,6 +49,7 @@ storiesOf('Switcher', module)
   ));
 
 
+ 
 const AE=({ns})=><div onClick={()=>
   { 
     console.log('ns',ns)
@@ -68,3 +69,77 @@ storiesOf('Menu', module)
   .add('Menu', () => (
     <Menu />
   ));
+
+const editItems=[{
+ _id:"0", //要操作的数据对象id
+ action:"save", //操作
+ className:"fa fa-save" //保存数据并切换到展示试图
+},{
+ _id:"0", //要操作的数据对象id
+ action:"remove", //操作
+ className:"fa fa-remove" //取消修改并切换到展示试图
+}];
+const viewItems=[{
+ _id:"0", //要操作的数据对象id
+ action:"edit", //操作
+ className:"fa fa-edit" //编辑数据
+},{
+ _id:"0", //要操作的数据对象id
+ action:"remove", //操作
+ className:"fa fa-trash" //删除数据
+}];
+var TextArea=(props)=><textarea {...props}/>; //简单包装
+import ReactPlayer from 'react-player'
+import MenuBar from '../components/list/MenuBar.js'
+storiesOf('MenuBar', module)
+  .add('EditorMenuBar', () => (
+    <MenuBar items={editItems}/>
+  ))
+  .add('ViewerMenuBar', () => (
+    <MenuBar items={viewItems}/>
+  ))
+  .add('Txt', () => (
+    <div><TextArea/></div>
+  ))
+  .add('Viedo', () => (
+     <Video
+  src="http://6968.liveplay.myqcloud.com/live/6968_8ee85003b4.m3u8"
+   type="application/x-mpegURL"
+/>
+  ));
+
+import Video from 'react-videojs';
+
+storiesOf('Video', module)
+  .add('Viedo', () => (
+     <Video
+  src="http://6968.liveplay.myqcloud.com/live/6968_8ee85003b4.m3u8"
+   type="application/x-mpegURL"
+/>
+  ));
+
+class TextEditorCore extends React.Component {
+  static propTypes = {
+    defaultValue: React.PropTypes.string,
+    onChange:React.PropTypes.func
+  };
+  static defaultProps = {
+    defaultValue:"" ,
+    onChange:()=>{console.warn("TextEditorCore need onChange props")}
+  };
+  constructor(props) {
+    super(props);
+    this.handleChange=this.handleChange.bind(this);
+  }
+  handleChange(e){
+    this.props.onChange(e.target.value)
+  }
+  render() {
+    return (
+      <textarea defaultValue={this.props.defaultValue} onChange={this.handleChange}/>
+    );
+  }
+}
+storiesOf('TextEditorCore', module)
+  .add('TextEditorCore', () => (
+     <TextEditorCore/>  ));

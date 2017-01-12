@@ -145,13 +145,19 @@ storiesOf('TextEditorCore', module)
      <TextEditorCore/>  ));
 
 import HaveApi from '../components/list/HaveApi'
-import {injectApi} from '../components/list/injectRest'
+import {injectApi,injectData,injectDataApi} from '../components/list/injectRest'
 import Mock from 'mockjs'
 
 Mock.mock("/test", 'get', {
     type: 'get'
 });
 
+const HaveData=({data})=><pre>{JSON.stringify(data)}</pre>
+
 const X=injectApi("/test")(HaveApi)
+const Y=injectData("/test")(HaveData);
+const Z=injectDataApi("/test")(HaveData);
 storiesOf('HaveApi',module)
-.add('HaveApi', ()=><X/>);
+.add('HaveApi', ()=><X/>)
+.add('HaveData', ()=><Y/> )
+.add('HaveDataApi', ()=><Z/> );

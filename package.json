@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/fangj/report#readme",
   "dependencies": {
+    "axios": "^0.15.3",
     "gitbook-plugin-fancybox": "^3.0.0",
+    "mockjs": "^1.0.1-beta3",
+    "ramda": "^0.23.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-player": "^0.14.1",

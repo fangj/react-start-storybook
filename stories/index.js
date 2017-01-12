@@ -143,3 +143,15 @@ class TextEditorCore extends React.Component {
 storiesOf('TextEditorCore', module)
   .add('TextEditorCore', () => (
      <TextEditorCore/>  ));
+
+import HaveApi from '../components/list/HaveApi'
+import {injectApi} from '../components/list/injectRest'
+import Mock from 'mockjs'
+
+Mock.mock("/test", 'get', {
+    type: 'get'
+});
+
+const X=injectApi("/test")(HaveApi)
+storiesOf('HaveApi',module)
+.add('HaveApi', ()=><X/>);

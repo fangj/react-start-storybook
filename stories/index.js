@@ -161,3 +161,11 @@ storiesOf('HaveApi',module)
 .add('HaveApi', ()=><X>aa</X>)
 .add('HaveData', ()=><Y>xx</Y> )
 .add('HaveDataApi', ()=><Z>hello</Z> );
+
+import promiseView from '../components/list/promiseView'
+var p=Promise.resolve("Success");
+var V=({value})=><div>hello,{value}</div>
+var PV=promiseView(p)(V);
+
+storiesOf('promiseView',module)
+.add('promiseView', ()=><PV/>)

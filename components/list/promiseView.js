@@ -9,10 +9,12 @@ var R=require('ramda');
 class PromiseViewWrapper extends React.Component {
   static propTypes = {
     ___promise: React.PropTypes.func, //promise
+    ___options:React.PropTypes.object,
     InjectedView:React.PropTypes.any,
   };
   static defaultProps = {
   	___promise:Promise.resolve,
+  	___options:{fulName:"value",rejName:"reason"},
 	InjectedView:()=>null
   };
   constructor(props) {
@@ -31,22 +33,24 @@ class PromiseViewWrapper extends React.Component {
   }
 
   render() {
-  	const {___promise,InjectedView,...others}=this.props;
+  	const {___promise,InjectedView,___options,...others}=this.props;
   	const {value,reason}=this.state;
   	if(typeof value===undefined && typeof reason===undefined){
   		return null;
   	}
-    return (
-    	(reason===undefined)?
-    	<InjectedView value={value} {...others}/>:
-    	<InjectedView reason={reason} {...others}/>
-    );
+  	if(reason===undefined){
+  		others[___options.fulName]=value;
+  	}else{
+  		others[___options.rejName]=reason;
+  	}
+    return (<InjectedView {...others}/>);
   }
 }
 
-const _promiseView=(promise,InjectedView)=>{
-	return (props)=><PromiseViewWrapper ___promise={promise} InjectedView={InjectedView} {...props}/>
+const _promiseView=(options,promise,InjectedView)=>{
+	return (props)=><PromiseViewWrapper ___promise={promise} ___options={options} InjectedView={InjectedView} {...props}/>
 }
 
-const promiseView=R.curry(_promiseView);
+const defaultOptions={fulName:"value",rejName:"reason"};
+const promiseView=R.curry(_promiseView)(defaultOptions);
 export default  promiseView;

@@ -63,15 +63,15 @@ class ViewWrapper extends React.Component {
   }
 
   render() {
-  	const {injectApi,restful_url_42,InjectedView,children,...others}=this.props;
+  	const {injectApi,restful_url_42,InjectedView,...others}=this.props;
   	const {data}=this.state;
   	if(typeof data===undefined){
   		return null;
   	}
     return (
     	injectApi?
-    	<InjectedView data={data} api={this.api} {...others}>{children}</InjectedView>:
-    	<InjectedView data={data} {...others}>{children}</InjectedView>
+    	<InjectedView data={data} api={this.api} {...others}/>:
+    	<InjectedView data={data} {...others}/>
     );
   }
 }

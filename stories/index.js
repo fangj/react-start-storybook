@@ -152,12 +152,12 @@ Mock.mock("/test", 'get', {
     type: 'get'
 });
 
-const HaveData=({data})=><pre>{JSON.stringify(data)}</pre>
+const HaveData=({data,children})=><pre>{JSON.stringify(data)}{children}</pre>
 
 const X=injectApi("/test")(HaveApi)
 const Y=injectData("/test")(HaveData);
 const Z=injectDataApi("/test")(HaveData);
 storiesOf('HaveApi',module)
-.add('HaveApi', ()=><X/>)
-.add('HaveData', ()=><Y/> )
-.add('HaveDataApi', ()=><Z/> );
+.add('HaveApi', ()=><X>aa</X>)
+.add('HaveData', ()=><Y>xx</Y> )
+.add('HaveDataApi', ()=><Z>hello</Z> );

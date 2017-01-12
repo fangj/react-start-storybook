@@ -23,8 +23,9 @@ export default class HaveApi extends React.Component {
   }
 
   render() {
+  	const {children}=this.props;
     return (
-      <pre>{JSON.stringify(this.state)}</pre>
+      <pre>{JSON.stringify(this.state)}{children}</pre>
     );
   }
 }

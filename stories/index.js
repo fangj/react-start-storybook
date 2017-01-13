@@ -182,3 +182,21 @@ storiesOf('injectRest2',module)
 .add('HaveApi', ()=><X2>aa</X2>)
 .add('HaveData', ()=><Y2>xx</Y2> )
 .add('HaveDataApi', ()=><Z2>hello</Z2> );
+
+import ShowChildren from '../components/list/ShowChildren';
+storiesOf('ShowChildren',module)
+.add('ShowChildren', ()=><ShowChildren>
+  <div name="aa">aa</div>
+  <div name="bb">bb</div>
+  </ShowChildren>)
+
+
+
+import Switcher2 from '../components/list/Switcher2.js'
+storiesOf('Switcher2', module)
+  .add('Switcher2', () => (
+    <Switcher2>
+      <A name='a'/>
+      <B name='b'/>
+    </Switcher2>
+  ));

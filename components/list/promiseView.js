@@ -4,53 +4,65 @@
 //
 
 import React from 'react';
-var CP=require('make-cancelable');
-var R=require('ramda');
+var mc=require('make-cancelable');
+const defaultPropNames={value:"value",reason:"reason"};
 class PromiseViewWrapper extends React.Component {
   static propTypes = {
     ___promise: React.PropTypes.func, //promise
-    ___options:React.PropTypes.object,
-    InjectedView:React.PropTypes.any,
+    ___propNames:React.PropTypes.object,
+    InjectedView:React.PropTypes.func,
   };
   static defaultProps = {
   	___promise:Promise.resolve,
-  	___options:{fulName:"value",rejName:"reason"},
+  	___propNames:defaultPropNames,
 	InjectedView:()=>null
   };
   constructor(props) {
     super(props);
     this.state={};
+    this.doPromise=this.doPromise.bind(this);
   }
 
-  componentDidMount() {
-  	this.promise=CP(this.props.___promise);//使用cancelable promise以避免数据到来时组件已经unmount
+  doPromise(props){
+  	this.promise=mc(props.___promise);//使用cancelable promise以避免数据到来时组件已经unmount
   	this.promise.then(value=>this.setState({value}))
   		.catch(reason=>this.setState({reason}));
   }
 
+  componentDidMount() {
+  	this.doPromise(this.props);//执行promise
+  }
+
   componentWillUnmount() {
-  	this.promise && this.promise.cancel();
+  	this.promise && this.promise.cancel(); //视图消失时取消promise
+  }
+
+  componentWillReceiveProps(nextProps) {
+  	if(this.props.promise!=nextProps.promise){
+  		doPromise(nextProps);
+  	}
   }
 
   render() {
-  	const {___promise,InjectedView,___options,...others}=this.props;
+  	const {___promise,InjectedView,___propNames,...others}=this.props;
   	const {value,reason}=this.state;
+  	const propNames=Object.assign({},defaultPropNames,___propNames);
   	if(typeof value===undefined && typeof reason===undefined){
   		return null;
   	}
   	if(reason===undefined){
-  		others[___options.fulName]=value;
+  		others[propNames.value]=value;
   	}else{
-  		others[___options.rejName]=reason;
+  		others[propNames.value]=reason;
   	}
     return (<InjectedView {...others}/>);
   }
 }
 
-const _promiseView=(options,promise,InjectedView)=>{
-	return (props)=><PromiseViewWrapper ___promise={promise} ___options={options} InjectedView={InjectedView} {...props}/>
+const _promiseView=(promise,InjectedView,propNames)=>{
+	return (props)=><PromiseViewWrapper ___promise={promise} ___propNames={propNames} InjectedView={InjectedView} {...props}/>
 }
 
-const defaultOptions={fulName:"value",rejName:"reason"};
-const promiseView=R.curry(_promiseView)(defaultOptions);
-export default  promiseView;
+export default  function(promise){
+	return (InjectedView,propNames={})=>_promiseView(promise,InjectedView,propNames);
+};

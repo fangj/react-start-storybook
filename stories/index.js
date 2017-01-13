@@ -164,8 +164,10 @@ storiesOf('HaveApi',module)
 
 import promiseView from '../components/list/promiseView'
 var p=Promise.resolve("Success");
-var V=({value})=><div>hello,{value}</div>
-var PV=promiseView(p)(V);
+var V=({abc})=><div>hello,{abc}</div>
+var PV=promiseView(p)(V,{value:"abc"});
 
 storiesOf('promiseView',module)
 .add('promiseView', ()=><PV/>)
+
+

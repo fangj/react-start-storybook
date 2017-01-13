@@ -193,10 +193,17 @@ storiesOf('ShowChildren',module)
 
 
 import Switcher2 from '../components/list/Switcher2.js'
+import SwitcherE2 from '../components/list/SwitcherE2.js'
 storiesOf('Switcher2', module)
   .add('Switcher2', () => (
-    <Switcher2>
+    <Switcher2 defaultName='b' >
       <A name='a'/>
       <B name='b'/>
     </Switcher2>
-  ));
+  ))
+  .add('SwitcherE2', () => (
+    <SwitcherE2 defaultName='b' >
+      <AE name='a'/>
+      <BE name='b'/>
+    </SwitcherE2>
+  ));;

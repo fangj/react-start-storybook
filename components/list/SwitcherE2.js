@@ -1,6 +1,8 @@
 import React from 'react';
+var _=require('lodash');
+var PubSub=require('pubsub-js');
 
-export default class Switch2 extends React.Component {
+export default class SwitcherE2 extends React.Component {
 
   static propTypes = {
     children: React.PropTypes.array,
@@ -8,10 +10,16 @@ export default class Switch2 extends React.Component {
       React.PropTypes.string,
       React.PropTypes.number,
     ]),//默认显示的组件名
+    ns:React.PropTypes.string,//组件的命名空间
   };
+
+  static defaultProps={
+    ns:"switcher"
+  }
 
   constructor(props) {
     super(props);
+    this.handleEvent=this.handleEvent.bind(this);
     this.show=(name)=>this.setState({name});
     this.state={name:this.props.defaultName};
     this.updateViews();
@@ -26,9 +34,25 @@ export default class Switch2 extends React.Component {
         this.state.name=name; //默认name不在的情况下，使用第一项的name
       }
       me.views[name]=React.cloneElement(child, {
-        show: me.show  //注入show函数
+        show: me.show,  //注入show函数
+        ns:me.props.ns, //注入命名空间
       });
     });
+  }
+
+  componentDidMount() {
+    const {ns}=this.props;
+    this.token=PubSub.subscribe(ns,this.handleEvent)
+  }
+  componentWillUnmount() {
+    PubSub.unsubscribe(this.token);
+  }
+
+  handleEvent(ns,evt){
+    var name=evt.show;
+    if(name && this.views[name]){
+      this.show(name);
+    }
   }
 
   render() {

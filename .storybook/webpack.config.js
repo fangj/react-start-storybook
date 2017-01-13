@@ -9,5 +9,8 @@ module.exports = function(config, env) {
           test: /\.less$/,
           loaders: ["style", "css", "less"]
       });
+  config.externals= {
+        "pubsub-js":"PubSub"
+  };
   return config;
 };

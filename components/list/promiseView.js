@@ -63,6 +63,6 @@ const _promiseView=(promise,InjectedView,propNames)=>{
 	return (props)=><PromiseViewWrapper ___promise={promise} ___propNames={propNames} InjectedView={InjectedView} {...props}/>
 }
 
-export default  function(promise){
+module.exports=function(promise){
 	return (InjectedView,propNames={})=>_promiseView(promise,InjectedView,propNames);
 };

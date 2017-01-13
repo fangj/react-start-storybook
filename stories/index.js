@@ -157,7 +157,7 @@ const HaveData=({data,children})=><pre>{JSON.stringify(data)}{children}</pre>
 const X=injectApi("/test")(HaveApi)
 const Y=injectData("/test")(HaveData);
 const Z=injectDataApi("/test")(HaveData);
-storiesOf('HaveApi',module)
+storiesOf('injectRest',module)
 .add('HaveApi', ()=><X>aa</X>)
 .add('HaveData', ()=><Y>xx</Y> )
 .add('HaveDataApi', ()=><Z>hello</Z> );
@@ -171,3 +171,14 @@ storiesOf('promiseView',module)
 .add('promiseView', ()=><PV/>)
 
 
+import {injectApi as injectApi2,injectData as injectData2,injectDataApi as injectDataApi2} from '../components/list/injectRest2'
+
+const HaveData2=({value,children})=><pre>{JSON.stringify(value)}{children}</pre>
+
+const X2=injectApi2("/test")(HaveApi)
+const Y2=injectData2("/test")(HaveData2);
+const Z2=injectDataApi2("/test")(HaveData,{value:"data"});
+storiesOf('injectRest2',module)
+.add('HaveApi', ()=><X2>aa</X2>)
+.add('HaveData', ()=><Y2>xx</Y2> )
+.add('HaveDataApi', ()=><Z2>hello</Z2> );

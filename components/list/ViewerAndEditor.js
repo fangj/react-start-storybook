@@ -11,8 +11,8 @@ export default class ViewerAndEditor extends React.Component {
 		ns:"ViewerAndEditor" ,
 		data: {
   		_id:"none",
-  		type:"txt",
-  		data:""
+  		type:"md",
+  		data:"# abc"
   	}
 	};
   constructor(props) {

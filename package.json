@@ -27,6 +27,7 @@
     "react-inject-restful": "^1.0.0",
     "react-player": "^0.14.1",
     "react-promise-view": "^1.0.0",
+    "react-rte": "^0.11.0",
     "react-switch-children": "^1.0.0",
     "react-videojs": "0.0.3"
   },

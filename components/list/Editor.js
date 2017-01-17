@@ -20,6 +20,7 @@ import React from 'react';
 //Editor 根据data.type决定用什么EditorCore 
 
 import TextEditorCore from './TextEditorCore';
+import MarkdownEditorCore from './MarkdownEditorCore';
 
 
 export default class Editor extends React.Component {
@@ -46,7 +47,10 @@ export default class Editor extends React.Component {
   }
 
   get editorCore() { //根据数据类型选择编辑器
-    const EditorCores={"txt":TextEditorCore};
+    const EditorCores={
+      "txt":TextEditorCore,
+      "md":MarkdownEditorCore
+    };
   	return EditorCores[this.props.data.type];
   }
 

@@ -18,28 +18,8 @@ import React from 'react';
 // save和menu消息由MenuBar发出
 // 
 //Editor 根据data.type决定用什么EditorCore 
-class TextEditorCore extends React.Component {
-  static propTypes = {
-    defaultValue: React.PropTypes.string,
-    onChange:React.PropTypes.func
-  };
-  static defaultProps = {
-    defaultValue:"" ,
-    onChange:()=>{console.warn("TextEditorCore need onChange props")}
-  };
-  constructor(props) {
-    super(props);
-    this.handleChange=this.handleChange.bind(this);
-  }
-  handleChange(e){
-    this.props.onChange(e.target.value)
-  }
-  render() {
-    return (
-      <textarea defaultValue={this.props.defaultValue} onChange={this.handleChange}/>
-    );
-  }
-}
+
+import TextEditorCore from './TextEditorCore';
 
 
 export default class Editor extends React.Component {

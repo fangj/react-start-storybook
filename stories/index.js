@@ -206,4 +206,10 @@ storiesOf('Switcher2', module)
       <AE name='a'/>
       <BE name='b'/>
     </SwitcherE2>
-  ));;
+  ));
+
+import ViewerAndEditor from '../components/list/ViewerAndEditor';
+storiesOf('ViewerAndEditor', module)
+  .add('ViewerAndEditor', () => (
+    <ViewerAndEditor/>
+  ))

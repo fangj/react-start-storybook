@@ -1,6 +1,6 @@
 import React from 'react';
 var _=require('lodash');
-var PubSub=require('pubsub-js');
+// var PubSub=require('pubsub-js');
 
 export default class SwitcherE2 extends React.Component {
 

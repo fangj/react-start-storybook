@@ -1,8 +1,10 @@
 import React from 'react';
 
 //Editor(ns,data)
-//=>id,{action:save} 保存数据
-//=>id,{action:cancel} 不保存数据
+//=>id,{action:save} 保存数据,切换为viwer
+//=>id,{action:cancel} 不保存数据,切换为viwer
+
+
 //负责对data的编辑
 //data={_id,type,data}
 //用EditorCore负责真正的数据编辑
@@ -50,22 +52,22 @@ export default class Editor extends React.Component {
   	data: {
   		_id:"none",
   		type:"txt",
-  		data:{}
+  		data:""
   	}
   };
 
   constructor(props) {
     super(props);
     this.save=this.save.bind(this);
+    this.showViewer=this.showViewer.bind(this);
+    this.handleMsg=this.handleMsg.bind(this);
+    this.handleMsgSave=this.handleMsgSave.bind(this);
+    this.handleMsgCancel=this.handleMsgCancel.bind(this);
   }
 
   get editorCore() { //根据数据类型选择编辑器
     const EditorCores={"txt":TextEditorCore};
-  	return EditorCores[this.props.type];
-  }
-
-  get data(){
-  	return this.props.data.data;//取得要编辑的数据
+  	return EditorCores[this.props.data.type];
   }
 
   save(data){
@@ -73,13 +75,42 @@ export default class Editor extends React.Component {
   }
 
   render() {
+    const defaultValue=this.props.data.data;
   	const EditorCore=this.editorCore;
     return (
-      <EditorCore defaultValue={this.data} onChange={this.save}/>
+      <EditorCore defaultValue={defaultValue} onChange={this.save}/>
     );
   }
+  // 
+  // render() {
+  //   return <div>editor</div>
+  // }
 
+  showViewer(){
+    const {ns}=this.props;
+    PubSub.publish(ns,{show:"viewer"});
+  }
+
+  handleMsg(_id,msg){
+    switch(msg.action){
+      case "save":return this.handleMsgSave();
+      case "cancel":return this.handleMsgCancel();
+    }
+  }
+
+  handleMsgSave(){
+    console.log("todo,save data",this.data);
+    this.showViewer()
+  }
+
+  handleMsgCancel(){
+    this.showViewer();
+  }
   componentDidMount() {
-  	
+    const {data}=this.props;
+  	this.token=PubSub.subscribe(data._id,this.handleMsg)
+  }
+  componentWillUnmount() {
+    PubSub.unsubscribe(this.token);
   }
 }

@@ -4,3 +4,5 @@ https://www.draw.io/#W57EE9A2FB46E5FDD!4327
 展示
 https://www.draw.io/?chrome=0&lightbox=1&edit=https%3A%2F%2Fwww.draw.io%2F%23W57EE9A2FB46E5FDD!4327&nav=1#W57EE9A2FB46E5FDD!4327
 
+todo:
+Editor(data)根据类型选择编辑器

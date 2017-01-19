@@ -1,7 +1,8 @@
 //promiseView
 //promiseView(promise)(View)
-//promiseView(promise,{fulName:"value",rejName:"reason"})(View) //todo
+//promiseView(promise,{value:"value",reason:"reason"})(View) 
 //
+
 
 import React from 'react';
 var mc=require('make-cancelable');
@@ -13,9 +14,9 @@ class PromiseViewWrapper extends React.Component {
     InjectedView:React.PropTypes.func,
   };
   static defaultProps = {
-  	___promise:Promise.resolve,
-  	___propNames:defaultPropNames,
-	InjectedView:()=>null
+    ___promise:Promise.resolve,
+    ___propNames:defaultPropNames,
+  InjectedView:()=>null
   };
   constructor(props) {
     super(props);
@@ -24,45 +25,47 @@ class PromiseViewWrapper extends React.Component {
   }
 
   doPromise(props){
-  	this.promise=mc(props.___promise);//使用cancelable promise以避免数据到来时组件已经unmount
-  	this.promise.then(value=>this.setState({value}))
-  		.catch(reason=>this.setState({reason}));
+    this.promise=mc(props.___promise);//使用cancelable promise以避免数据到来时组件已经unmount
+    this.promise.then(value=>this.setState({value}))
+      .catch(reason=>{
+        !reason.isCanceled&&this.setState({reason}) //如果被cancel可能是组件unmount,不能再setState
+    });
   }
 
   componentDidMount() {
-  	this.doPromise(this.props);//执行promise
+    this.doPromise(this.props);//执行promise
   }
 
   componentWillUnmount() {
-  	this.promise && this.promise.cancel(); //视图消失时取消promise
+    this.promise && this.promise.cancel(); //视图消失时取消promise
   }
 
   componentWillReceiveProps(nextProps) {
-  	if(this.props.promise!=nextProps.promise){
-  		doPromise(nextProps);
-  	}
+    if(this.props.promise!=nextProps.promise){
+      doPromise(nextProps);
+    }
   }
 
   render() {
-  	const {___promise,InjectedView,___propNames,...others}=this.props;
-  	const {value,reason}=this.state;
-  	const propNames=Object.assign({},defaultPropNames,___propNames);
-  	if(typeof value===undefined && typeof reason===undefined){
-  		return null;
-  	}
-  	if(reason===undefined){
-  		others[propNames.value]=value;
-  	}else{
-  		others[propNames.value]=reason;
-  	}
+    const {___promise,InjectedView,___propNames,...others}=this.props;
+    const {value,reason}=this.state;
+    const propNames=Object.assign({},defaultPropNames,___propNames);
+    if(typeof value===undefined && typeof reason===undefined){
+      return null;
+    }
+    if(reason===undefined){
+      others[propNames.value]=value;
+    }else{
+      others[propNames.reason]=reason;
+    }
     return (<InjectedView {...others}/>);
   }
 }
 
 const _promiseView=(promise,InjectedView,propNames)=>{
-	return (props)=><PromiseViewWrapper ___promise={promise} ___propNames={propNames} InjectedView={InjectedView} {...props}/>
+  return (props)=><PromiseViewWrapper ___promise={promise} ___propNames={propNames} InjectedView={InjectedView} {...props}/>
 }
 
-module.exports=function(promise){
-	return (InjectedView,propNames={})=>_promiseView(promise,InjectedView,propNames);
+module.exports=function(promise,propNames={}){
+  return (InjectedView)=>_promiseView(promise,InjectedView,propNames);
 };

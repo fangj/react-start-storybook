@@ -34,9 +34,20 @@ storiesOf('Hello', module)
   ));
 
 import List from '../components/list/List.js'
+import ListR from '../components/list/ListR.js'
+import Mock from 'mockjs'
+
+
+const Random=Mock.Random;
+const mockItems=()=>Mock.mock("/items", 'get',[Random.natural(),Random.natural()]);
+
+mockItems();//生成测试数据
 storiesOf('List', module)
   .add('List', () => (
-    <List className="Jack" items={[1,2,3]} ns="somelist" ItemV={({item,idx})=><pre key={idx}>{item}</pre>}/>
+    <List className="Jack" items={[1,2,3]} ns="somelist" itemProps={{x:3}} ItemView={({item,idx})=><pre key={idx}>a:{item}</pre>}/>
+  ))
+  .add('ListR', () => (
+    <ListR className="Rose" url="/items" ns="somelist2" itemProps={{y:3}} ItemView={({item,idx,refresh})=><pre key={idx} onClick={()=>{mockItems();refresh();}}>b:{item}</pre>}/>
   ));
 
 const A=({show})=><div onClick={()=>show('b')}>A</div>
@@ -146,7 +157,6 @@ storiesOf('TextEditorCore', module)
 
 import HaveApi from '../components/list/HaveApi'
 import {injectApi,injectData,injectDataApi} from '../components/list/injectRest'
-import Mock from 'mockjs'
 
 Mock.mock("/test", 'get', {
     type: 'get'
@@ -165,19 +175,29 @@ storiesOf('injectRest',module)
 import promiseView from '../components/list/promiseView'
 var p=Promise.resolve("Success");
 var V=({abc})=><div>hello,{abc}</div>
-var PV=promiseView(p)(V,{value:"abc"});
+var PV=promiseView(p,{value:"abc"})(V);
+
+import promiseFactoryView from '../components/list/promiseFactoryView'
+var counter=1;
+var pf=()=> Promise.resolve(counter++);
+var V2=({abc,ns,refresh})=><ul>
+  <li>hello,{abc}</li>
+  <li onClick={refresh} style={{cursor:"pointer"}}>click herer refresh by props function</li>
+  <li onClick={()=>PubSub.publish(ns,"refresh")} style={{cursor:"pointer"}}>click here refresh by pubsub</li>
+</ul>
+var PFV=promiseFactoryView(pf,{value:"abc"})(V2);
 
 storiesOf('promiseView',module)
 .add('promiseView', ()=><PV/>)
+.add('promiseFactoryView', ()=><PFV/>)
 
-
-import {injectApi as injectApi2,injectData as injectData2,injectDataApi as injectDataApi2} from '../components/list/injectRest2'
+import {injectApi as injectApi2,injectValue as injectValue2,injectValueApi as injectValueApi2} from '../components/list/injectRest2'
 
 const HaveData2=({value,children})=><pre>{JSON.stringify(value)}{children}</pre>
 
 const X2=injectApi2("/test")(HaveApi)
-const Y2=injectData2("/test")(HaveData2);
-const Z2=injectDataApi2("/test")(HaveData,{value:"data"});
+const Y2=injectValue2("/test")(HaveData2);
+const Z2=injectValueApi2("/test",{value:"data"})(HaveData);
 storiesOf('injectRest2',module)
 .add('HaveApi', ()=><X2>aa</X2>)
 .add('HaveData', ()=><Y2>xx</Y2> )
